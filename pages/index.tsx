@@ -1,115 +1,145 @@
+import { useState, useEffect, FormEvent, ChangeEvent } from "react"; // Importa tipos de eventos
+import Link from "next/link";
+import { fetchInitialUsers, searchUsers } from "../lib/githubApi";
+import { useFavorites } from "../context/FavoritesContext";
+import { UserDTO } from "../types/github"; // Importa el tipo de usuario básico
 import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// import styles from '../styles/Home.module.css';
 
 export default function Home() {
+  // Tipa el estado 'users' como un array de GitHubUserBasic
+  const [users, setUsers] = useState<UserDTO[]>([]);
+  const [loading, setLoading] = useState<boolean>(false); // Tipa boolean
+  const [error, setError] = useState<string | null>(null); // Tipa string o null
+  const [searchTerm, setSearchTerm] = useState<string>(""); // Tipa string
+
+  const { isFavorite, toggleFavorite } = useFavorites();
+
+  // Carga Inicial de Usuarios (CSR) - Tipa la data recibida
+  useEffect(() => {
+    setLoading(true);
+    fetchInitialUsers()
+      .then((data: UserDTO[]) => {
+        // Tipa 'data'
+        setUsers(data);
+        setLoading(false);
+      })
+      .catch((err: unknown) => {
+        // Puedes tipar 'err' de forma más específica si conoces su estructura
+        setError("Error al cargar usuarios iniciales.");
+        setLoading(false);
+        console.error(err);
+      });
+  }, []);
+
+  // Lógica de Búsqueda (CSR) - Tipa el evento del formulario
+  const handleSearch = async (e: FormEvent<HTMLFormElement>) => {
+    // Tipa el evento
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    try {
+      const results: UserDTO[] = await searchUsers(searchTerm); // Tipa 'results'
+      setUsers(results);
+    } catch (err: unknown) {
+      setError("Error al buscar usuarios.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Tipa el evento del input
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
   return (
-    <div
-      className={`${geistSans.className} ${geistMono.className} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    // <div className={styles.container}> {/* Usa la clase del módulo */}
+    <div>
+      <h1>GitHub Users</h1>
+
+      {/* <form className={styles.searchForm} onSubmit={handleSearch}> */}
+      <form onSubmit={handleSearch}>
+        <input
+          type="text"
+          placeholder="Buscar usuarios por nombre..."
+          value={searchTerm}
+          onChange={handleInputChange} // Usa la función tipada
         />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              pages/index.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        <button type="submit">Buscar</button>
+        {searchTerm && (
+          <button
+            type="button"
+            onClick={() => {
+              setSearchTerm("");
+              // Opcional: Recargar lista inicial al limpiar
+              setLoading(true);
+              fetchInitialUsers()
+                .then(setUsers)
+                .catch(setError)
+                .finally(() => setLoading(false));
+            }}
           >
+            Limpiar
+          </button>
+        )}
+      </form>
+
+      {loading && <p>Cargando usuarios...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      {!loading && users.length === 0 && <p>No se encontraron usuarios.</p>}
+
+      {/* Lista de Usuarios */}
+      {/* <ul className={styles.userList}> */}
+      <ul>
+        {/* Tipa el parámetro 'user' en el map */}
+        {users.map((user: UserDTO) => (
+          // <li key={user.id} className={styles.userItem}>
+          <li key={user.id}>
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              src={user.avatar_url}
+              alt={`${user.login}'s avatar`}
+              width={50}
+              height={50}
+              // className={styles.avatar}
+              style={{ borderRadius: "50%", marginRight: "15px" }}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+            {/* <div className={styles.userInfo}> */}
+            <div>
+              {/* Enlace a la página de detalle */}
+              <Link href={`/users/${user.login}`} legacyBehavior>
+                {/* <a className={styles.userNameLink}> */}
+                <a
+                  style={{
+                    fontWeight: "bold",
+                    textDecoration: "none",
+                    color: "blue",
+                  }}
+                >
+                  {user.login}
+                </a>
+              </Link>
+              {/* Botón o Icono de Favorito */}
+              <button
+                onClick={() => toggleFavorite(user.login)}
+                // className={styles.favoriteButton}
+                style={{
+                  marginLeft: "10px",
+                  cursor: "pointer",
+                  backgroundColor: "transparent",
+                  border: "none",
+                  color: isFavorite(user.login) ? "gold" : "gray",
+                }}
+              >
+                {isFavorite(user.login) ? "⭐️" : "☆"}
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
