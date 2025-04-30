@@ -51,4 +51,7 @@ export interface UserRepoDTO {
   forks_url: string;
   keys_url: string;
   collaborators_url: string;
+  language: string | null;
+  stargazers_count: number;
+  forks_count: number;
 }

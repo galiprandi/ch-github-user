@@ -1,4 +1,4 @@
-import { UserDTO, UserDetailedDTO, UserRepoDTO } from "../types/github"; // Importa los tipos
+import { UserDetailedDTO, UserDTO, UserRepoDTO } from "../types/github"; // Importa los tipos
 
 const BASE_URL = "https://api.github.com";
 
