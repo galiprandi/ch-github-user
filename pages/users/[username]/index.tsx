@@ -8,7 +8,13 @@ import Image from "next/image";
 import ButtonBack from "@/components/ButtonBack";
 import router from "next/router";
 
-export const getStaticProps: GetStaticProps<UserDetailsProps, Params> = async (context) => {
+const CACHE_DURATION = process.env.CACHE_DURATION
+  ? parseInt(process.env.CACHE_DURATION)
+  : 86400;
+
+export const getStaticProps: GetStaticProps<UserDetailsProps, Params> = async (
+  context
+) => {
   const { username } = context.params!;
 
   try {
@@ -17,14 +23,14 @@ export const getStaticProps: GetStaticProps<UserDetailsProps, Params> = async (c
     if (!user)
       return {
         notFound: true,
-        revalidate: 86400,
+        revalidate: CACHE_DURATION,
       };
 
     return {
       props: {
         user,
       },
-      revalidate: 86400, // 1 día
+      revalidate: CACHE_DURATION,
     };
   } catch (error: unknown) {
     console.error("Error fetching user details in getStaticProps:", error);
@@ -32,7 +38,7 @@ export const getStaticProps: GetStaticProps<UserDetailsProps, Params> = async (c
       props: {
         error: "Error loading user details.",
       },
-      revalidate: 86400,
+      revalidate: CACHE_DURATION,
     };
   }
 };

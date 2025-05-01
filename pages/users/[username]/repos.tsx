@@ -11,7 +11,14 @@ import { fetchUserDetails, fetchUserRepos } from "@/lib/githubApi";
 import ButtonBack from "@/components/ButtonBack";
 import router from "next/router";
 
-export const getStaticProps: GetStaticProps<RepoListProps, { username: string }> = async (
+const CACHE_DURATION = process.env.CACHE_DURATION
+  ? parseInt(process.env.CACHE_DURATION)
+  : 86400;
+
+export const getStaticProps: GetStaticProps<
+  RepoListProps,
+  { username: string }
+> = async (
   context: GetStaticPropsContext<{ username: string }>
 ): Promise<GetStaticPropsResult<RepoListProps>> => {
   const { username } = context.params!;
@@ -25,7 +32,7 @@ export const getStaticProps: GetStaticProps<RepoListProps, { username: string }>
     if (!user) {
       return {
         notFound: true,
-        revalidate: 86400,
+        revalidate: CACHE_DURATION,
       };
     }
 
@@ -34,18 +41,20 @@ export const getStaticProps: GetStaticProps<RepoListProps, { username: string }>
         user,
         repos,
       },
-      revalidate: 86400, // 1 día
+      revalidate: CACHE_DURATION,
     };
   } catch (error) {
     console.error("Error fetching user repos:", error);
     return {
       notFound: true,
-      revalidate: 86400,
+      revalidate: CACHE_DURATION,
     };
   }
 };
 
-export const getStaticPaths: GetStaticPaths<{ username: string }> = async () => {
+export const getStaticPaths: GetStaticPaths<{
+  username: string;
+}> = async () => {
   // No pre-generamos paths, se generan bajo demanda
   return {
     paths: [],
