@@ -28,6 +28,17 @@ function MyApp({ Component, pageProps }: AppProps) {
         </header>
         <br />
         <Component {...pageProps} />
+        <footer>
+          <br />
+          <nav>
+            <p>
+              Developed by{" "}
+              <a href="https://github.com/galiprandi">Germán Aliprandi</a>
+            </p>
+            <p>© 2025 GitHub Users Directory. All rights reserved.</p>
+          </nav>
+          <br />
+        </footer>
       </main>
     </FavoritesProvider>
   );
