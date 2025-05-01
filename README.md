@@ -2,6 +2,8 @@
 
 Web application built with Next.js (Page Router) to search, list, and mark GitHub users as favorites, and view their details and repositories.
 
+![Screenshot](./public/screenshot-1.png)
+
 ## Features
 
 * **Home (CSR):**
