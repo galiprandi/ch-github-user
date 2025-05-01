@@ -1,17 +1,19 @@
 import Link from "next/link";
 import type {
   NextPage,
-  GetServerSidePropsContext,
-  GetServerSidePropsResult,
+  GetStaticProps,
+  GetStaticPaths,
+  GetStaticPropsContext,
+  GetStaticPropsResult,
 } from "next";
 import { UserDetailedDTO, UserRepoDTO } from "../../../types/github";
 import { fetchUserDetails, fetchUserRepos } from "@/lib/githubApi";
 import ButtonBack from "@/components/ButtonBack";
 import router from "next/router";
 
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext<{ username: string }>
-): Promise<GetServerSidePropsResult<RepoListProps>> => {
+export const getStaticProps: GetStaticProps<RepoListProps, { username: string }> = async (
+  context: GetStaticPropsContext<{ username: string }>
+): Promise<GetStaticPropsResult<RepoListProps>> => {
   const { username } = context.params!;
 
   try {
@@ -23,6 +25,7 @@ export const getServerSideProps = async (
     if (!user) {
       return {
         notFound: true,
+        revalidate: 86400,
       };
     }
 
@@ -31,13 +34,23 @@ export const getServerSideProps = async (
         user,
         repos,
       },
+      revalidate: 86400, // 1 día
     };
   } catch (error) {
     console.error("Error fetching user repos:", error);
     return {
       notFound: true,
+      revalidate: 86400,
     };
   }
+};
+
+export const getStaticPaths: GetStaticPaths<{ username: string }> = async () => {
+  // No pre-generamos paths, se generan bajo demanda
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
 };
 
 const UserRepoPage: NextPage<RepoListProps> = ({ user, repos, error }) => {

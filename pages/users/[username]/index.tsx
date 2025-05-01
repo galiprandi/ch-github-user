@@ -1,17 +1,14 @@
 import { fetchUserDetails } from "../../../lib/githubApi";
 import { useFavorites } from "../../../context/FavoritesContext";
 import Link from "next/link";
-import type { GetServerSideProps, NextPage } from "next";
+import type { GetStaticProps, GetStaticPaths, NextPage } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import { UserDetailedDTO } from "../../../types/github";
 import Image from "next/image";
 import ButtonBack from "@/components/ButtonBack";
 import router from "next/router";
 
-export const getServerSideProps: GetServerSideProps<
-  UserDetailsProps,
-  Params
-> = async (context) => {
+export const getStaticProps: GetStaticProps<UserDetailsProps, Params> = async (context) => {
   const { username } = context.params!;
 
   try {
@@ -20,21 +17,32 @@ export const getServerSideProps: GetServerSideProps<
     if (!user)
       return {
         notFound: true,
+        revalidate: 86400,
       };
 
     return {
       props: {
         user,
       },
+      revalidate: 86400, // 1 día
     };
   } catch (error: unknown) {
-    console.error("Error fetching user details in getServerSideProps:", error);
+    console.error("Error fetching user details in getStaticProps:", error);
     return {
       props: {
         error: "Error loading user details.",
       },
+      revalidate: 86400,
     };
   }
+};
+
+export const getStaticPaths: GetStaticPaths<Params> = async () => {
+  // No pre-generamos paths, se generan bajo demanda
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
 };
 
 const UserDetailsPage: NextPage<UserDetailsProps> = ({ user, error }) => {
