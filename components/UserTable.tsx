@@ -22,7 +22,7 @@ export default function UserTable({
       <thead>
         <tr>
           <th scope="col">User</th>
-          <th scope="col">Url</th>
+          <th scope="col">GitHub</th>
           <th scope="col">Details</th>
           <th scope="col">Favorite</th>
         </tr>
@@ -50,7 +50,10 @@ export default function UserTable({
                       flexShrink: 0,
                     }}
                   />
-                  <Link href={`/users/${user.login}`}>
+                  <Link
+                    href={`/users/${user.login}`}
+                    data-tooltip="User Details"
+                  >
                     <strong>{user.login}</strong>
                   </Link>
                 </div>
@@ -61,6 +64,7 @@ export default function UserTable({
                   href={user.html_url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-tooltip="GitHub"
                 >
                   <IconGithub />
                 </a>
@@ -70,13 +74,19 @@ export default function UserTable({
                 <nav>
                   <ul>
                     <li>
-                      <Link href={`/users/${user.login}`}>
+                      <Link
+                        href={`/users/${user.login}`}
+                        data-tooltip="User Details"
+                      >
                         <IconUserDetails />
                       </Link>
                     </li>
 
                     <li>
-                      <Link href={`/users/${user.login}/repos`}>
+                      <Link
+                        href={`/users/${user.login}/repos`}
+                        data-tooltip="User Repositories"
+                      >
                         <IconRepo />
                       </Link>
                     </li>
@@ -95,6 +105,7 @@ export default function UserTable({
                     lineHeight: 1,
                     display: "inline-block",
                   }}
+                  data-tooltip="Favorite"
                 >
                   <span
                     style={{
