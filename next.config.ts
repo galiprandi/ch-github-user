@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
@@ -13,6 +14,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  output: "export",
+  basePath: "/ch-github-user",
 };
 
 export default nextConfig;
