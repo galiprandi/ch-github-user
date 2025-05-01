@@ -4,9 +4,9 @@ import Link from "next/link";
 import type { GetStaticProps, GetStaticPaths, NextPage } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import { UserDetailedDTO } from "../../../types/github";
-import Image from "next/image";
 import ButtonBack from "@/components/ButtonBack";
 import router from "next/router";
+import UserAvatar from "@/components/UserAvatar";
 
 const CACHE_DURATION = process.env.CACHE_DURATION
   ? parseInt(process.env.CACHE_DURATION)
@@ -89,12 +89,10 @@ const UserDetailsPage: NextPage<UserDetailsProps> = ({ user, error }) => {
       </nav>
       <article>
         <div className="grid">
-          <Image
+          <UserAvatar
             src={avatar_url}
             alt={`${displayName}'s avatar`}
-            width={400}
-            height={400}
-            style={{ borderRadius: "50%" }}
+            size={400}
           />
           <div>
             <br />
