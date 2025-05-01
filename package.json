@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next export",
+    "deploy": "npm run export && gh-pages -d out"
   },
   "dependencies": {
     "@galiprandi/react-tools": "^3.2.0",
@@ -19,6 +21,7 @@
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "gh-pages": "^6.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
