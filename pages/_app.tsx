@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="Browse and explore GitHub user profiles, repositories, and contributions."
         />
         <meta property="og:type" content="website" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" />
       </Head>
       <main className="container">
         <br />
