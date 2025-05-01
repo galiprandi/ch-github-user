@@ -6,6 +6,8 @@ import type {
 } from "next";
 import { UserDetailedDTO, UserRepoDTO } from "../../../types/github";
 import { fetchUserDetails, fetchUserRepos } from "@/lib/githubApi";
+import ButtonBack from "@/components/ButtonBack";
+import router from "next/router";
 
 export const getServerSideProps = async (
   context: GetServerSidePropsContext<{ username: string }>
@@ -62,9 +64,7 @@ const UserRepoPage: NextPage<RepoListProps> = ({ user, repos, error }) => {
         </ul>
         <ul>
           <li>
-            <Link href={`/users/${user.login}`} legacyBehavior>
-              <a className="secondary">← Back</a>
-            </Link>
+            <ButtonBack onClick={() => router.back()} />
           </li>
         </ul>
       </nav>

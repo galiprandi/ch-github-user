@@ -1,7 +1,8 @@
-import { useState, useEffect, FormEvent, ChangeEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { fetchInitialUsers, searchUsers } from "../lib/githubApi";
 import { UserDTO } from "../types/github";
 import UserTable from "@/components/UserTable";
+import { useFavorites } from "../context/FavoritesContext";
 
 export default function Home() {
   const [users, setUsers] = useState<UserDTO[]>([]);
@@ -9,32 +10,29 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null); // Tipa string o null
   const [searchTerm, setSearchTerm] = useState<string>(""); // Tipa string
 
-  // Carga Inicial de Usuarios (CSR) - Tipa la data recibida
+  const { isFavorite, toggleFavorite } = useFavorites();
+
   useEffect(() => {
     setLoading(true);
     fetchInitialUsers()
       .then((data: UserDTO[]) => {
-        // Tipa 'data'
         setUsers(data);
         setLoading(false);
       })
       .catch((err: unknown) => {
-        // Puedes tipar 'err' de forma más específica si conoces su estructura
         setError("Error al cargar usuarios iniciales.");
         setLoading(false);
         console.error(err);
       });
   }, []);
 
-  // Lógica de Búsqueda (CSR) - Tipa el evento del formulario
   const handleSearch = async (e: FormEvent<HTMLFormElement>) => {
-    // Tipa el evento
     e.preventDefault();
     setLoading(true);
     setError(null);
 
     try {
-      const results: UserDTO[] = await searchUsers(searchTerm); // Tipa 'results'
+      const results: UserDTO[] = await searchUsers(searchTerm);
       setUsers(results);
     } catch (err: unknown) {
       setError("Error al buscar usuarios.");
@@ -42,11 +40,6 @@ export default function Home() {
     } finally {
       setLoading(false);
     }
-  };
-
-  // Tipa el evento del input
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
   };
 
   return (
@@ -57,16 +50,36 @@ export default function Home() {
             type="search"
             placeholder="Search users"
             value={searchTerm}
-            onChange={handleInputChange}
+            onChange={({ target: { value } }) => setSearchTerm(value)}
           />
         </fieldset>
       </form>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
+      {loading && users.length === 0 && (
+        <p aria-busy="true">Cargando usuarios...</p>
+      )}
 
-      {!loading && users.length === 0 && <p>No se encontraron usuarios.</p>}
+      {!loading && users.length === 0 && searchTerm !== "" && (
+        <p>No se encontraron usuarios para &quot;{searchTerm}&quot;.</p>
+      )}
+      {!loading && users.length === 0 && searchTerm === "" && (
+        <p>No se encontraron usuarios iniciales.</p>
+      )}
 
-      <UserTable users={users} />
+      {!loading && users.length > 0 && (
+        <UserTable
+          users={users}
+          isFavorite={isFavorite}
+          toggleFavorite={toggleFavorite}
+        />
+      )}
+
+      {loading && users.length > 0 && (
+        <p aria-busy="true" style={{ textAlign: "center", marginTop: "20px" }}>
+          Actualizando lista...
+        </p>
+      )}
     </>
   );
 }

@@ -5,6 +5,8 @@ import type { GetServerSideProps, NextPage } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import { UserDetailedDTO } from "../../../types/github";
 import Image from "next/image";
+import ButtonBack from "@/components/ButtonBack";
+import router from "next/router";
 
 export const getServerSideProps: GetServerSideProps<
   UserDetailsProps,
@@ -96,7 +98,7 @@ const UserDetailsPage: NextPage<UserDetailsProps> = ({ user, error }) => {
             <p>
               <strong>Public Repos:</strong> {user.public_repos}{" "}
               <Link href={`/users/${user.login}/repos`} legacyBehavior>
-                See repos
+                see repos
               </Link>
             </p>
             {user.location && (
@@ -122,9 +124,7 @@ const UserDetailsPage: NextPage<UserDetailsProps> = ({ user, error }) => {
         </div>
       </article>
       <br />
-      <Link href="/" legacyBehavior>
-        <a className="secondary">← Back</a>
-      </Link>
+      <ButtonBack onClick={() => router.back()} />
     </section>
   );
 };
