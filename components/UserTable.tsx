@@ -1,10 +1,9 @@
-// components/UserTable.tsx (Example without comments)
 import { UserDTO } from "@/types/github";
-import Image from "next/image";
 import Link from "next/link";
 import { IconGithub } from "./icons/IconGithub";
 import { IconRepo } from "./icons/IconRepo";
 import { IconUserDetails } from "./icons/IconUserDetails";
+import UserAvatar from "./UserAvatar";
 
 interface UserTableProps {
   users: UserDTO[];
@@ -21,8 +20,8 @@ export default function UserTable({
     <table role="grid">
       <thead>
         <tr>
-          <th scope="col">User</th>
-          <th scope="col"></th>
+          <th scope="col">Users</th>
+          <th scope="col">Links</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -37,18 +36,13 @@ export default function UserTable({
           users.map((user) => (
             <tr key={user.id}>
               <td>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <Image
+                <div style={{ display: "flex", alignItems: "center", gap: 30 }}>
+                  <UserAvatar
                     src={user.avatar_url}
                     alt={user.login}
-                    width={50}
-                    height={50}
-                    style={{
-                      borderRadius: "50%",
-                      marginRight: 15,
-                      flexShrink: 0,
-                    }}
+                    size={55}
                   />
+
                   <Link
                     href={`/users/${user.login}`}
                     data-tooltip="User Details"
