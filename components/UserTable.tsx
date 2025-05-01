@@ -22,7 +22,7 @@ export default function UserTable({
       <thead>
         <tr>
           <th scope="col">User</th>
-          <th scope="col">Links</th>
+          <th scope="col">Url</th>
           <th scope="col">Details</th>
           <th scope="col">Favorite</th>
         </tr>
@@ -57,17 +57,26 @@ export default function UserTable({
               </td>
 
               <td>
+                <a
+                  href={user.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <IconGithub />
+                </a>
+              </td>
+
+              <td>
                 <nav>
                   <ul>
                     <li>
-                      <a
-                        href={user.html_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <IconGithub />
-                      </a>
+                      <Link href={`/users/${user.login}`} legacyBehavior>
+                        <a className="outline">
+                          <IconUserDetails />
+                        </a>
+                      </Link>
                     </li>
+
                     <li>
                       <Link href={`/users/${user.login}/repos`} legacyBehavior>
                         <a className="outline">
@@ -77,14 +86,6 @@ export default function UserTable({
                     </li>
                   </ul>
                 </nav>
-              </td>
-
-              <td>
-                <Link href={`/users/${user.login}`} legacyBehavior>
-                  <a className="outline">
-                    <IconUserDetails />
-                  </a>
-                </Link>
               </td>
 
               <td>
