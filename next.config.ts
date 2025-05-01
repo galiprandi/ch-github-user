@@ -14,8 +14,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  output: "export",
-  basePath: "/ch-github-user",
 };
 
 export default nextConfig;
