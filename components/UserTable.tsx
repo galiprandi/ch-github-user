@@ -22,9 +22,8 @@ export default function UserTable({
       <thead>
         <tr>
           <th scope="col">User</th>
-          <th scope="col">GitHub</th>
-          <th scope="col">Details</th>
-          <th scope="col">Favorite</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -60,19 +59,18 @@ export default function UserTable({
               </td>
 
               <td>
-                <a
-                  href={user.html_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-tooltip="GitHub"
-                >
-                  <IconGithub />
-                </a>
-              </td>
-
-              <td>
                 <nav>
                   <ul>
+                    <li>
+                      <a
+                        href={user.html_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-tooltip="GitHub"
+                      >
+                        <IconGithub />
+                      </a>
+                    </li>
                     <li>
                       <Link
                         href={`/users/${user.login}`}
