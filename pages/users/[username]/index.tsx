@@ -147,7 +147,7 @@ const UserDetailsPage: NextPage<UserDetailsProps> = ({ user, error }) => {
   );
 };
 
-export default UserDetailsPage; // Exporta el componente de página
+export default UserDetailsPage;
 
 // Interfaces
 interface Params extends ParsedUrlQuery {
