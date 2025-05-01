@@ -65,9 +65,6 @@ export default function Home() {
       {!loading && users.length === 0 && searchTerm !== "" && (
         <p>No users found for &quot;{searchTerm}&quot;.</p>
       )}
-      {!loading && users.length === 0 && searchTerm === "" && (
-        <p>No users found.</p>
-      )}
 
       {!loading && users.length > 0 && (
         <UserTable

@@ -63,6 +63,69 @@ CACHE_DURATION=86400 # 1 day (default)
 * User detail and repositories pages use Incremental Static Regeneration (ISR), automatically regenerating each page every X seconds (`CACHE_DURATION`).
 * This improves performance and reduces load on the GitHub API.
 
+## 🧪 Testing
+
+### End-to-End Testing with Cypress
+
+This project uses Cypress for end-to-end testing, focusing on the following key aspects:
+
+1. **Test Strategy**
+   - Uses semantic HTML selectors for reliable element selection
+   - Mocks API responses using fixtures
+   - Handles Next.js ISR/SSR pages appropriately
+   - Tests focus on user interactions and expected outcomes
+   - Sequential execution for better debugging
+
+2. **Running Tests**
+   ```bash
+   # Run tests in headless mode
+   npm run test:e2e
+   
+   # Run tests in interactive mode (with browser UI)
+   npm run test:e2e:dev
+   ```
+   
+   **Note:** Tests run sequentially for better debugging and reliability.
+
+3. **Test Files**
+   - `cypress/e2e/github-users.spec.cy.ts`: Main test file covering:
+     * Home page:
+       - Search functionality
+       - User listing
+       - Error handling
+       - Loading states
+     * User details page:
+       - User information display
+       - Favorite status
+       - Navigation
+     * User repositories page:
+       - Repository listing
+       - Data display
+       - Navigation
+
+4. **Fixtures**
+   - `cypress/fixtures/github-user.json`: Mock user data
+   - `cypress/fixtures/github-repos.json`: Mock repository data
+
+### Test Structure
+
+The tests verify:
+1. Page rendering and structure
+2. Data loading and display
+3. User interactions (search, navigation)
+4. Error handling and loading states
+5. Routing between pages
+
+### Test Assertions
+
+The tests check for:
+1. Correct page rendering and navigation
+2. Proper data display (user info, repositories)
+3. Search functionality and results
+4. Loading states and error messages
+5. User interactions (favorite toggling)
+6. Data consistency across pages
+
 ## 🚀 Deploy
 
 You can deploy on Vercel, Netlify, etc. The project is compatible with serverless environments and supports environment variables.
