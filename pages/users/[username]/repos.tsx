@@ -10,6 +10,7 @@ import { UserDetailedDTO, UserRepoDTO } from "../../../types/github";
 import { fetchUserDetails, fetchUserRepos } from "@/lib/githubApi";
 import ButtonBack from "@/components/ButtonBack";
 import router from "next/router";
+import ReposTable from "@/components/ReposTable";
 
 const CACHE_DURATION = process.env.CACHE_DURATION
   ? parseInt(process.env.CACHE_DURATION)
@@ -55,7 +56,6 @@ export const getStaticProps: GetStaticProps<
 export const getStaticPaths: GetStaticPaths<{
   username: string;
 }> = async () => {
-  // No pre-generamos paths, se generan bajo demanda
   return {
     paths: [],
     fallback: "blocking",
@@ -79,7 +79,7 @@ const UserRepoPage: NextPage<RepoListProps> = ({ user, repos, error }) => {
       <nav>
         <ul>
           <li>
-            <h1>{displayName}&apos;s: Repositories</h1>
+            <h1>{displayName}</h1>
           </li>
         </ul>
         <ul>
@@ -89,40 +89,7 @@ const UserRepoPage: NextPage<RepoListProps> = ({ user, repos, error }) => {
         </ul>
       </nav>
 
-      <section>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Language</th>
-              <th>Stars</th>
-              <th>Forks</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {repos.map((repo) => (
-              <tr key={repo.id}>
-                <td>{repo.name}</td>
-                <td>{repo.description || "No description"}</td>
-                <td>{repo.language}</td>
-                <td>{repo.stargazers_count}</td>
-                <td>{repo.forks_count}</td>
-                <td>
-                  <a
-                    href={repo.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View
-                  </a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+      <ReposTable repos={repos} />
     </section>
   );
 };
