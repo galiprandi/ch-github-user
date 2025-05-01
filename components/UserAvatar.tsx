@@ -24,5 +24,4 @@ const Skeleton = ({ size = 55 }: { size?: number }) => {
 
 const styles: CSSProperties = {
   borderRadius: "50%",
-  backgroundColor: "#ccc",
 };
