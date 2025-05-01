@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "export": "next export",
-    "deploy": "npm run export && gh-pages -d out"
+    "deploy": "npm run build && gh-pages -d .next"
   },
   "dependencies": {
     "@galiprandi/react-tools": "^3.2.0",
