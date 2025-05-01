@@ -58,9 +58,7 @@ const UserDetailsPage: NextPage<UserDetailsProps> = ({ user, error }) => {
     return (
       <div>
         <p>User not found.</p>
-        <Link href="/" legacyBehavior>
-          <a>Back to list</a>
-        </Link>
+        <Link href="/">Back to list</Link>
       </div>
     );
 
@@ -111,9 +109,7 @@ const UserDetailsPage: NextPage<UserDetailsProps> = ({ user, error }) => {
             </p>
             <p>
               <strong>Public Repos:</strong> {user.public_repos}{" "}
-              <Link href={`/users/${user.login}/repos`} legacyBehavior>
-                see repos
-              </Link>
+              <Link href={`/users/${user.login}/repos`}>see repos</Link>
             </p>
             {user.location && (
               <p>

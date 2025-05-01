@@ -67,9 +67,7 @@ const UserRepoPage: NextPage<RepoListProps> = ({ user, repos, error }) => {
     return (
       <div>
         <p>{error}</p>
-        <Link href={`/users/${user.login}`} legacyBehavior>
-          <a>Back to user profile</a>
-        </Link>
+        <Link href={`/users/${user.login}`}>Back to user profile</Link>
       </div>
     );
   }

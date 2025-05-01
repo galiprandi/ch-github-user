@@ -50,7 +50,7 @@ export default function UserTable({
                       flexShrink: 0,
                     }}
                   />
-                  <Link href={`/users/${user.login}`} legacyBehavior>
+                  <Link href={`/users/${user.login}`}>
                     <strong>{user.login}</strong>
                   </Link>
                 </div>
@@ -70,18 +70,14 @@ export default function UserTable({
                 <nav>
                   <ul>
                     <li>
-                      <Link href={`/users/${user.login}`} legacyBehavior>
-                        <a className="outline">
-                          <IconUserDetails />
-                        </a>
+                      <Link href={`/users/${user.login}`}>
+                        <IconUserDetails />
                       </Link>
                     </li>
 
                     <li>
-                      <Link href={`/users/${user.login}/repos`} legacyBehavior>
-                        <a className="outline">
-                          <IconRepo />
-                        </a>
+                      <Link href={`/users/${user.login}/repos`}>
+                        <IconRepo />
                       </Link>
                     </li>
                   </ul>
