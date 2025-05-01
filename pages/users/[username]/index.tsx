@@ -64,72 +64,80 @@ const UserDetailsPage: NextPage<UserDetailsProps> = ({ user, error }) => {
 
   const displayName = user.name || user.login;
 
+  const {
+    login,
+    bio,
+    avatar_url,
+    public_repos,
+    followers,
+    html_url,
+    blog,
+    location,
+  } = user;
+
   return (
-    <section>
+    <section style={{ maxWidth: 1100, margin: "auto" }}>
       <nav>
+        <ul></ul>
         <ul>
           <li>
-            <h1>{displayName}</h1>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <button onClick={() => toggleFavorite(user.login)}>
-              {isFavorite(user.login)
-                ? "Remove from Favorites ⭐"
-                : "Add to Favorites ☆"}
+            <button onClick={() => toggleFavorite(login)}>
+              {isFavorite(login) ? "⭐ Favorite" : "☆ Favorite"}
             </button>
           </li>
         </ul>
       </nav>
       <article>
         <div className="grid">
+          <Image
+            src={avatar_url}
+            alt={`${displayName}'s avatar`}
+            width={400}
+            height={400}
+            style={{ borderRadius: "50%" }}
+          />
           <div>
-            <Image
-              src={user.avatar_url}
-              alt={`${displayName}'s avatar`}
-              width={400}
-              height={400}
-              style={{ borderRadius: "50%" }}
-            />
-          </div>
-          <div>
-            <h2>{displayName}</h2>
-            {user.bio && (
-              <p>
-                <strong>Bio:</strong> {user.bio}
-              </p>
-            )}
+            <br />
+            <hgroup>
+              <h2>{displayName}</h2>
+              {bio && <p>{bio}</p>}
+            </hgroup>
+            <ul>
+              {followers > 0 && (
+                <li>
+                  <strong>Followers:</strong> {user.followers}
+                </li>
+              )}
 
-            <p>
-              <strong>Followers:</strong> {user.followers}
-            </p>
-            <p>
-              <strong>Following:</strong> {user.following}
-            </p>
-            <p>
-              <strong>Public Repos:</strong> {user.public_repos}{" "}
-              <Link href={`/users/${user.login}/repos`}>see repos</Link>
-            </p>
-            {user.location && (
-              <p>
-                <strong>Location:</strong> {user.location}
-              </p>
-            )}
-            {user.blog && (
-              <p>
-                <strong>Web:</strong>{" "}
-                <a href={user.blog} target="_blank" rel="noopener noreferrer">
-                  {user.blog}
+              {public_repos > 0 && (
+                <li>
+                  <strong>Repositories:</strong>
+                  <Link href={`/users/${user.login}/repos`}>
+                    {" "}
+                    {user.public_repos} publics
+                  </Link>
+                </li>
+              )}
+              <li>
+                <strong>GitHub:</strong>{" "}
+                <a href={html_url} target="_blank" rel="noopener noreferrer">
+                  {html_url}
                 </a>
-              </p>
-            )}
-            <p>
-              <strong>GitHub Profile:</strong>{" "}
-              <a href={user.html_url} target="_blank" rel="noopener noreferrer">
-                {user.html_url}
-              </a>
-            </p>
+              </li>
+              {blog && (
+                <li>
+                  <strong>Blog:</strong>{" "}
+                  <a href={blog} target="_blank" rel="noopener noreferrer">
+                    {blog}
+                  </a>
+                </li>
+              )}
+              {location && (
+                <li>
+                  <strong>Location:</strong> {location}
+                </li>
+              )}
+            </ul>
           </div>
         </div>
       </article>
