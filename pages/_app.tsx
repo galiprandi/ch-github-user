@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <main className="container">
         <br />
         <header>
-          <h1>GitHub Users Directory</h1>
+          <h2>GitHub Users Directory</h2>
         </header>
         <br />
         <Component {...pageProps} />
