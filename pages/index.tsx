@@ -20,7 +20,7 @@ export default function Home() {
         setLoading(false);
       })
       .catch((err: unknown) => {
-        setError("Error al cargar usuarios iniciales.");
+        setError("Error loading initial users.");
         setLoading(false);
         console.error(err);
       });
@@ -43,7 +43,7 @@ export default function Home() {
   };
 
   return (
-    <>
+    <section>
       <form onSubmit={handleSearch}>
         <fieldset role="group">
           <input
@@ -55,16 +55,18 @@ export default function Home() {
         </fieldset>
       </form>
 
+      <br />
+
       {error && <p style={{ color: "red" }}>{error}</p>}
       {loading && users.length === 0 && (
-        <p aria-busy="true">Cargando usuarios...</p>
+        <p aria-busy="true">Loading users...</p>
       )}
 
       {!loading && users.length === 0 && searchTerm !== "" && (
-        <p>No se encontraron usuarios para &quot;{searchTerm}&quot;.</p>
+        <p>No users found for &quot;{searchTerm}&quot;.</p>
       )}
       {!loading && users.length === 0 && searchTerm === "" && (
-        <p>No se encontraron usuarios iniciales.</p>
+        <p>No users found.</p>
       )}
 
       {!loading && users.length > 0 && (
@@ -77,9 +79,9 @@ export default function Home() {
 
       {loading && users.length > 0 && (
         <p aria-busy="true" style={{ textAlign: "center", marginTop: "20px" }}>
-          Actualizando lista...
+          Updating list...
         </p>
       )}
-    </>
+    </section>
   );
 }
