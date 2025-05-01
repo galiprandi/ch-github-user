@@ -1,10 +1,10 @@
 # GitHub Users Directory
 
-Web application built with Next.js (Page Router) to search, list, and mark GitHub users as favorites, and view their details and repositories.
+Web application built with Next.js to search, list, and mark GitHub users as favorites, and view their details and repositories.
 
 ![Screenshot](./public/screenshot-1.png)
 
-## Features
+## 📚 Features
 
 * **Home (CSR):**
   * Initial list of GitHub users.
@@ -20,33 +20,31 @@ Web application built with Next.js (Page Router) to search, list, and mark GitHu
   * Lists the user's public repositories.
   * Same caching behavior as detail page.
 
-## Technologies & Libraries
+## 🌐 Technologies & Libraries
 
-* [Next.js](https://nextjs.org) (Page Router, TypeScript)
-* React Context for favorites
-* Modern CSS and custom components
-* Fetch API for GitHub consumption
+* [Next.js](https://nextjs.org) with Page Router and TypeScript.
+* [React-Tools](https://www.npmjs.com/package/@galiprandi/react-tools): LazyRender for improved performance.
+* [Pico CSS](https://picocss.com/): Minimal CSS Framework.
+* [GitHub API](https://docs.github.com/en/rest/users?apiVersion=2022-11-28): for fetching User and Repository data.
 
-## Installation & Usage
+## ⚒️ Installation & Usage
 
 ```bash
 npm install
 npm run dev
-# or
-yarn install && yarn dev
 ```
 
 Open <http://localhost:3000> in your browser.
 
-### Environment Variables
+### 📄 Environment Variables
 
 You can set the cache duration (ISR) with the `CACHE_DURATION` variable (in seconds):
 
-```
+```bash
 CACHE_DURATION=86400 # 1 day (default)
 ```
 
-## Main Structure
+## 📁 Main Structure
 
 * `/pages/index.tsx` – Home and search (CSR)
 * `/pages/users/[username]/index.tsx` – User detail (ISR)
@@ -55,23 +53,18 @@ CACHE_DURATION=86400 # 1 day (default)
 * `/context/FavoritesContext.tsx` – Favorites context
 * `/lib/githubApi.ts` – GitHub API utilities
 
-## Favorites
+## ⭐ Favorites
 
 * Favorites are managed in localStorage and are not persisted after refresh.
 * You can mark/unmark favorites from both the home and detail pages.
 
-## Notes on Cache (ISR)
+## 📝 Notes on Cache (ISR)
 
 * User detail and repositories pages use Incremental Static Regeneration (ISR), automatically regenerating each page every X seconds (`CACHE_DURATION`).
 * This improves performance and reduces load on the GitHub API.
 
-## Deploy
+## 🚀 Deploy
 
 You can deploy on Vercel, Netlify, etc. The project is compatible with serverless environments and supports environment variables.
 
-## Testing
-
-* The project is ready for testing with Vitest.
-* Test files are located next to the source code as `.test.ts`.
-
-Thank you for reviewing this project! If you have suggestions, issues, or feedback, feel free to open an issue or PR.
+🤝 Thank you for reviewing this project! If you have suggestions, issues, or feedback, feel free to open an issue or PR.
