@@ -67,31 +67,31 @@ CACHE_DURATION=86400 # 1 day (default)
 
 ### End-to-End Testing with Cypress
 
-- **Enfoque**: Pruebas completas de flujos de usuario, simulando interacciones reales y verificando navegación y respuestas.
-- **Cubrimiento**: Páginas como la home, detalles de usuario y repositorios, enfocándose en UI y API integradas.
-- **Ejecución**: Usa `npm run test:e2e` para modo headless o `npm run test:e2e:dev` para modo interactivo.
-- **Herramientas**: Cypress con mocks y fixtures para simular datos.
+- **Focus**: Comprehensive tests of user flows, simulating real interactions and verifying navigation and responses.
+- **Coverage**: Pages like home, user details, and repositories, emphasizing UI and integrated API.
+- **Execution**: Use `npm run test:e2e` for headless mode or `npm run test:e2e:dev` for interactive mode.
+- **Tools**: Cypress with mocks and fixtures to simulate data.
 
 ### Unit Testing with Vitest
 
-- **Enfoque**: Pruebas individuales de funciones API, aislando el código con mocks.
-- **Cubrimiento**: Funciones en `githubApi.ts`, como fetch y búsquedas.
-- **Ejecución**: Usa `npm run test:unit` para ejecutar todos o `npm run test:dev` para modo watch.
-- **Herramientas**: Vitest con mocks de fetch para simular respuestas.
+- **Focus**: Individual tests of API functions, isolating code with mocks.
+- **Coverage**: Functions in `githubApi.ts`, such as fetch and search operations.
+- **Execution**: Use `npm run test:unit` to run all or `npm run test:dev` for watch mode.
+- **Tools**: Vitest with fetch mocks to simulate responses.
 
-### Comparación de Tests
+### Test Comparison
 
-Para una visión clara, aquí una tabla comparativa entre los tipos de testing:
+For a clear overview, here's a table comparing the testing types:
 
-| Aspecto | Unit Testing (Vitest) | Integration Testing (Cypress) |
-|---------|------------------------|-------------------------------|
-| **Enfoque** | Pruebas de código individual, mockeando dependencias como fetch. | Pruebas de flujos completos, simulando interacciones de usuario en el navegador. |
-| **Cubrimiento** | Funciones API en `githubApi.ts`, verificando lógica interna. | Páginas web, navegación y respuestas integradas con UI. |
-| **Ejecución** | Rápida y local, con `npm run test:unit`. | Más lenta, requiere navegador, con `npm run test:e2e`. |
-| **Ventajas** | Detecta errores específicos rápidamente sin dependencias externas. | Verifica el comportamiento real del usuario y flujos end-to-end. |
-| **Herramientas** | Vitest con mocks automáticos. | Cypress con fixtures y selecciones semánticas.
+| Feature | Unit Testing (Vitest) | End-to-End Testing (Cypress) |
+|---------|------------------------|------------------------------|
+| **Focus** | Tests individual code units, mocking dependencies like fetch. | Tests complete user flows, simulating browser interactions. |
+| **Coverage** | API functions in `githubApi.ts`, verifying internal logic. | Web pages, navigation, and integrated UI responses. |
+| **Execution** | Fast and local, with `npm run test:unit`. | Slower, requires browser, with `npm run test:e2e`. |
+| **Advantages** | Quickly detects specific errors without external dependencies. | Verifies real user behavior and end-to-end flows. |
+| **Tools** | Vitest with automatic mocks. | Cypress with fixtures and semantic selectors. |
 
-Esta estrategia asegura una cobertura completa, desde el código base hasta las interacciones del usuario.
+This strategy ensures comprehensive coverage from code base to user interactions.
 
 ## 🚀 Deploy
 
