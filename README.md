@@ -60,8 +60,8 @@ CACHE_DURATION=86400 # 1 day (default)
 
 ## 📝 Notes on Cache (ISR)
 
-* User detail and repositories pages use Incremental Static Regeneration (ISR), automatically regenerating each page every X seconds (`CACHE_DURATION`).
-* This improves performance and reduces load on the GitHub API.
+- User detail and repositories pages use Incremental Static Regeneration (ISR), automatically regenerating each page every `CACHE_DURATION` seconds.
+- This improves performance and reduces load on the GitHub API.
 
 ## 🧪 Testing
 
@@ -97,4 +97,10 @@ This strategy ensures comprehensive coverage from code base to user interactions
 
 You can deploy on Vercel, Netlify, etc. The project is compatible with serverless environments and supports environment variables.
 
-🤝 Thank you for reviewing this project! If you have suggestions, issues, or feedback, feel free to open an issue or PR.
+## 🤝 Contributing
+
+Contributions are welcome! Please open an issue or pull request on GitHub if you have suggestions, bug fixes, or enhancements. Follow the code style and testing guidelines in this README.
+
+## 📄 License
+
+This project is licensed under the MIT License – see the LICENSE file for details.
