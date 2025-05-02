@@ -67,113 +67,31 @@ CACHE_DURATION=86400 # 1 day (default)
 
 ### End-to-End Testing with Cypress
 
-This project uses Cypress for end-to-end testing, focusing on the following key aspects:
-
-1. **Test Strategy**
-   - Uses semantic HTML selectors for reliable element selection
-   - Mocks API responses using fixtures
-   - Handles Next.js ISR/SSR pages appropriately
-   - Tests focus on user interactions and expected outcomes
-   - Sequential execution for better debugging
-
-2. **Running Tests**
-   ```bash
-   # Run tests in headless mode
-   npm run test:e2e
-   
-   # Run tests in interactive mode (with browser UI)
-   npm run test:e2e:dev
-   ```
-   
-   **Note:** Tests run sequentially for better debugging and reliability.
-
-3. **Test Files**
-   - `cypress/e2e/github-users.spec.cy.ts`: Main test file covering:
-     * Home page:
-       - Search functionality
-       - User listing
-       - Error handling
-       - Loading states
-     * User details page:
-       - User information display
-       - Favorite status
-       - Navigation
-     * User repositories page:
-       - Repository listing
-       - Data display
-       - Navigation
-
-4. **Fixtures**
-   - `cypress/fixtures/github-user.json`: Mock user data
-   - `cypress/fixtures/github-repos.json`: Mock repository data
-
-### Test Structure
-
-The tests verify:
-1. Page rendering and structure
-2. Data loading and display
-3. User interactions (search, navigation)
-4. Error handling and loading states
-5. Routing between pages
-
-### Test Assertions
-
-The tests check for:
-1. Correct page rendering and navigation
-2. Proper data display (user info, repositories)
-3. Search functionality and results
-4. Loading states and error messages
-5. User interactions (favorite toggling)
-6. Data consistency across pages
+- **Enfoque**: Pruebas completas de flujos de usuario, simulando interacciones reales y verificando navegación y respuestas.
+- **Cubrimiento**: Páginas como la home, detalles de usuario y repositorios, enfocándose en UI y API integradas.
+- **Ejecución**: Usa `npm run test:e2e` para modo headless o `npm run test:e2e:dev` para modo interactivo.
+- **Herramientas**: Cypress con mocks y fixtures para simular datos.
 
 ### Unit Testing with Vitest
 
-This project uses Vitest for unit testing, focusing on testing the GitHub API utilities in `lib/githubApi.ts`. The unit tests cover:
+- **Enfoque**: Pruebas individuales de funciones API, aislando el código con mocks.
+- **Cubrimiento**: Funciones en `githubApi.ts`, como fetch y búsquedas.
+- **Ejecución**: Usa `npm run test:unit` para ejecutar todos o `npm run test:dev` para modo watch.
+- **Herramientas**: Vitest con mocks de fetch para simular respuestas.
 
-1. **Test Strategy**
-   - Mocks the global `fetch` function to simulate API responses
-   - Tests each API function independently:
-     - `fetchInitialUsers`: Tests successful fetch and error handling
-     - `searchUsers`: Tests search functionality, fallback to initial users, and error handling
-     - `fetchUserDetails`: Tests successful fetch, 404 handling, and error handling
-     - `fetchUserRepos`: Tests successful fetch and error handling
-   - Verifies correct API endpoint calls and response handling
-   - Tests both success and error scenarios
+### Comparación de Tests
 
-2. **Running Tests**
-   ```bash
-   # Run all unit tests
-   npm run test:unit
-   
-   # Run unit tests in watch mode
-   npm run test:dev
-   ```
+Para una visión clara, aquí una tabla comparativa entre los tipos de testing:
 
-3. **Test Files**
-   - `lib/githubApi.test.ts`: Contains all unit tests for the GitHub API utilities
-   - Tests focus on:
-     * API endpoint correctness
-     * Response data handling
-     * Error scenarios
-     * Special cases (empty query, 404 responses)
+| Aspecto | Unit Testing (Vitest) | Integration Testing (Cypress) |
+|---------|------------------------|-------------------------------|
+| **Enfoque** | Pruebas de código individual, mockeando dependencias como fetch. | Pruebas de flujos completos, simulando interacciones de usuario en el navegador. |
+| **Cubrimiento** | Funciones API en `githubApi.ts`, verificando lógica interna. | Páginas web, navegación y respuestas integradas con UI. |
+| **Ejecución** | Rápida y local, con `npm run test:unit`. | Más lenta, requiere navegador, con `npm run test:e2e`. |
+| **Ventajas** | Detecta errores específicos rápidamente sin dependencias externas. | Verifica el comportamiento real del usuario y flujos end-to-end. |
+| **Herramientas** | Vitest con mocks automáticos. | Cypress con fixtures y selecciones semánticas.
 
-### Test Structure
-
-The tests verify:
-1. Correct API endpoint calls
-2. Proper response data handling
-3. Error handling and error messages
-4. Special cases and edge cases
-5. Data type and structure validation
-
-### Test Assertions
-
-The tests check for:
-1. Correct API endpoint URLs
-2. Proper response data transformation
-3. Correct error message formatting
-4. Appropriate error handling
-5. Data structure validation
+Esta estrategia asegura una cobertura completa, desde el código base hasta las interacciones del usuario.
 
 ## 🚀 Deploy
 
