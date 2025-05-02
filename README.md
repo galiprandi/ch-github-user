@@ -126,6 +126,55 @@ The tests check for:
 5. User interactions (favorite toggling)
 6. Data consistency across pages
 
+### Unit Testing with Vitest
+
+This project uses Vitest for unit testing, focusing on testing the GitHub API utilities in `lib/githubApi.ts`. The unit tests cover:
+
+1. **Test Strategy**
+   - Mocks the global `fetch` function to simulate API responses
+   - Tests each API function independently:
+     - `fetchInitialUsers`: Tests successful fetch and error handling
+     - `searchUsers`: Tests search functionality, fallback to initial users, and error handling
+     - `fetchUserDetails`: Tests successful fetch, 404 handling, and error handling
+     - `fetchUserRepos`: Tests successful fetch and error handling
+   - Verifies correct API endpoint calls and response handling
+   - Tests both success and error scenarios
+
+2. **Running Tests**
+   ```bash
+   # Run all unit tests
+   npm run test:unit
+   
+   # Run unit tests in watch mode
+   npm run test:dev
+   ```
+
+3. **Test Files**
+   - `lib/githubApi.test.ts`: Contains all unit tests for the GitHub API utilities
+   - Tests focus on:
+     * API endpoint correctness
+     * Response data handling
+     * Error scenarios
+     * Special cases (empty query, 404 responses)
+
+### Test Structure
+
+The tests verify:
+1. Correct API endpoint calls
+2. Proper response data handling
+3. Error handling and error messages
+4. Special cases and edge cases
+5. Data type and structure validation
+
+### Test Assertions
+
+The tests check for:
+1. Correct API endpoint URLs
+2. Proper response data transformation
+3. Correct error message formatting
+4. Appropriate error handling
+5. Data structure validation
+
 ## 🚀 Deploy
 
 You can deploy on Vercel, Netlify, etc. The project is compatible with serverless environments and supports environment variables.
