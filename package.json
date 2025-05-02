@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "test:e2e": "cypress run",
-    "test:e2e:dev": "cypress open"
+    "test:e2e:dev": "cypress open",
+    "test:unit": "vitest run",
+    "test:unit:dev": "vitest"
   },
   "dependencies": {
     "@galiprandi/react-tools": "^3.2.0",
@@ -24,10 +26,13 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitest/coverage-v8": "^3.1.2",
     "cypress": "^14.3.2",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
+    "jsdom": "^26.1.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.1.2"
   }
 }
